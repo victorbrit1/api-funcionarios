@@ -1,4 +1,4 @@
-const request = require('superjest')
+const request = require('supertest')
 
 const app = require('../app')
 
@@ -12,10 +12,10 @@ describe("API de funcionarios" , () => {
         })
 
 
-    expect(resposta.statusCode.toBe(201))
+    expect(resposta.statusCode).toBe(201)
     
-    expect(resposta.body.nome.toBe("Maria"))
-    
-    expect(resposta.body.cargo.toBe("Analista"))
+    expect(resposta.body.nome).toBe("Maria")
+
+    expect(resposta.body.cargo).toBe("Analista")
     })
 })
