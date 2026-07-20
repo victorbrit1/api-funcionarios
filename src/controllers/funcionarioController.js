@@ -1,8 +1,18 @@
 const Funcionario = require('../models/funcionario')
+const axios = require("axios")
 
 exports.cadastrar = async(req,res)=>{
     try{
         const funcionario = await Funcionario.create(req.body)
+
+        console.log(process.env.API_BENEFICIOS);
+
+        await axios.post(`${process.env.API_BENEFICIOS}/beneficios`,{
+            funcionarioId: funcionario.id,
+            salario: funcionario.salario,
+            cargo: funcionario.cargo
+        })
+
         res.status(201).json(funcionario)
 
     }catch(error){
