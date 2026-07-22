@@ -3,7 +3,7 @@ name: Pipeline CI
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build:
@@ -41,6 +41,6 @@ jobs:
       # Cria as tabelas no banco de testes
       - run: npx sequelize-cli db:migrate --env test
 
-      # Executa os testes
+      # Executa os testes1
 
       - run: npm run build
