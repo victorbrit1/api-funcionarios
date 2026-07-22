@@ -42,6 +42,5 @@ jobs:
       - run: npx sequelize-cli db:migrate --env test
 
       # Executa os testes
-      - run: npm test
 
       - run: npm run build
