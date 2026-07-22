@@ -3,7 +3,7 @@ name: Pipeline CI
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build:
@@ -14,7 +14,6 @@ jobs:
       DB_USER: root
       DB_PASSWORD: root
       DB_NAME: empresa_test
-      NODE_ENV: test
 
     services:
       mysql:
@@ -25,26 +24,23 @@ jobs:
         ports:
           - 3306:3306
         options: >-
-          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -proot"
+          --health-cmd="mysqladmin ping"
           --health-interval=10s
           --health-timeout=5s
-          --health-retries=10
+          --health-retries=5
 
     steps:
-      - name: Baixar código
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Configurar Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 24
-          cache: npm
 
-      - name: Instalar dependências
-        run: npm ci
+      - run: npm install
 
-      - name: Executar migrations
-        run: npx sequelize-cli db:migrate --env test
+      # Cria as tabelas no banco de testes
+      - run: npx sequelize-cli db:migrate --env test
 
-      - name: Gerar build
-        run: npm run build
+      # Executa os testes
+
+      - run: npm run build
